@@ -7,10 +7,16 @@ import cv2
 
 class FaceRecognizer():
     def __init__(self):
-        self.MODEL_JSON = r"Model\FaceNet_Architecture.json"
-        self.WEIGHT_BASE = r"Model\model_weights"
-        self.model = self.load_model()
-        with open("DataBase\\DataBase.json", "r") as file:
+        self.cwdir = os.path.curdir
+        self.MODEL_JSON = os.path.join(self.cwdir,'Model','FaceNet_Architecture.json')
+        self.WEIGHT_BASE = os.path.join('Model','model_weights')
+        if "FaceNet_Keras_converted.h5" not in os.listdir(os.path.join(self.cwdir, 'Model')):
+            self.model = self.load_model()
+        else:
+            model_path = os.path.join(self.cwdir, 'Model', 'FaceNet_Keras_converted.h5')
+            self.model = tf.keras.models.load_model(model_path)
+        database_path = os.path.join(self.cwdir, 'DataBase', 'DataBase.json')
+        with open(database_path, "r") as file:
             self.database = json.load(file)
     
     def load_model(self):
@@ -35,7 +41,7 @@ class FaceRecognizer():
     
     def export_model(self, path=None):
         if path == None:
-            path = os.path.join("Model", "FaceNet_Keras_updated.h5")
+            path = os.path.join("Model", "FaceNet_Keras_converted.h5")
         self.model.save(path)
     
     def preprocess_image(self, face_img):
@@ -78,5 +84,5 @@ class FaceRecognizer():
                 person_name = name
         if minimum_distance>1:
             person_name = "UNKNOWN"
-            minimum_distance = None
+            minimum_distance = 2
         return person_name, minimum_distance

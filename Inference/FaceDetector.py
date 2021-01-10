@@ -54,7 +54,7 @@ class FaceDetector():
 			cv2.rectangle(img_copy, (x1,y1), (x2,y2), color, thickness)
 		return img_copy
 
-	def crop_face(self, img, bboxes):
+	def crop_faces(self, img, bboxes):
 		image = img.copy()
 		face_crops = []
 		for box in bboxes:
