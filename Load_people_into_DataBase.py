@@ -13,16 +13,17 @@ if "DataBase.json" not in files:
         json.dump(empty_json,file)
 
 def add_person_to_database(Name, feature_vector):
-    with open(os.path.join("DataBase", "DataBase.json"), "r+") as file:
-        new_record=False
+    # load DataBase.json File
+    with open(os.path.join("DataBase", "DataBase.json"), "r") as file:
         data = json.load(file)
-        if Name not in data.keys():
-            new_record = True
-        data.update({Name:feature_vector})
-        file.seek(0)
+
+    # append the record
+    data[Name] = feature_vector
+
+    # Save updated record to DataBase.json
+    with open(os.path.join("DataBase", "DataBase.json"), "w") as file:
         json.dump(data,file)
-        if new_record:
-            print(f"{Name} is added to DataBase")
+        print(f"{Name} is added to DataBase")
 
 people = os.listdir(PEOPLE_DIR)
 recog = FaceRecognizer()

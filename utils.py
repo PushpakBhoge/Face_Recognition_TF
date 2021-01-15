@@ -23,16 +23,36 @@ class Detector():
         return results
 
     def draw_results(self, image, infer_results, 
-                    color=(255,0,0),box_thickness=7,
-                    font_size=3, font_thickness=10):
+                    color=(255,0,0),box_thickness=None,
+                    font_size=None, font_thickness=None, 
+                    offset=None):
         img = image.copy()
+
+        settings = self.get_draw_settings(image.shape)
+        if offset == None:
+            offset = settings[0]
+        if font_size == None:
+            font_size = settings[1]
+        if font_thickness == None:
+            font_thickness = settings[2]
+        if box_thickness == None:
+            box_thickness = settings[3]
+        
         for result in infer_results:
             dist, name, box = result
             x1,y1,x2,y2 = box
             img = cv2.rectangle(img,(x1,y1),(x2,y2), 
                             color=color, thickness=box_thickness)
             text = "{} {:.2f}".format(name, dist)
-            img = cv2.putText(img, text, (x1,y1-20), 
+            img = cv2.putText(img, text, (x1,y1-offset), 
                 cv2.FONT_HERSHEY_SIMPLEX, font_size,
                 color, font_thickness, cv2.LINE_AA)
         return img
+    
+    def get_draw_settings(self,image_shape):
+        width,height,channels = image_shape
+        offset = round(width/150)
+        font_size = round(width/800, 2)
+        font_thickness = round(width/400)
+        box_thickness = round(width/300)
+        return offset, font_size, font_thickness, box_thickness
