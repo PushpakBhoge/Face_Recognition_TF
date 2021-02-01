@@ -10,11 +10,14 @@ import numpy as np
 BASE_DIR = "images"
 list_imgs = os.listdir("images\\")
 
+model_dir = r"Model\svc_classifier.sav"
+json_dir = r"Model\decode.json"
+
 detector = Detector()
 for im in list_imgs:
 	img = cv2.imread(os.path.join(BASE_DIR, im))
 	img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
+	
 	predictions = detector.get_people_names(img,speed_up=False, downscale_by=1)
 	annoted_image = detector.draw_results(img, predictions)
 
