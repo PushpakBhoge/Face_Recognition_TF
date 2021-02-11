@@ -1,7 +1,5 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-from Inference.FaceDetector import FaceDetector
-from Inference.FaceRecognizer import FaceRecognizer
 from utils import Detector
 import cv2
 import numpy as np
@@ -21,7 +19,7 @@ for im in list_imgs:
 	img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 	
 	# get predictions and draw them on image
-	predictions = detector.get_people_names(img,speed_up=False, downscale_by=1)
+	predictions = detector.get_people_names(img, speed_up=False, downscale_by=1)
 	annoted_image = detector.draw_results(img, predictions)
 
 	# convert back to BGR (since using cv2)
