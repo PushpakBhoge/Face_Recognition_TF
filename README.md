@@ -30,7 +30,7 @@ This repo contained model weights in older version of keras, so when I tried to 
 
 You can export the model in single keras .h5 format. I did excatly that to use the model as pre trained model for transfer learning in another project. It had differnt version of Tensorflow it still gave 'Bad marshal' error. So I recommend using the layer by layer weights they are independent of the tensorflow version :smile:. To load the weights look 'load_model' method in Inference/FaceRecognizer.py file
 
-# Project directory structure Structure
+# Project directory structure
 folders discription
 * DataBase - here, Database is stored by default (currently project does not support multiple datbae but coming soon in flask app)
 * images - put your images here code will run face detection on images in this folder when app.py is run
