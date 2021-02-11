@@ -3,7 +3,7 @@ numpy==1.18.5
 joblib==0.17.0
 scipy==1.5.4
 mtcnn==0.1.0
-tensorflow==2.3.1
+tensorflow==2.4.0
 gdown==3.12.2
 Keras==2.4.3
 scikit_learn==0.24.1
