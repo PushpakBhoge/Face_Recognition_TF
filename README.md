@@ -6,13 +6,13 @@ FaceNet is the current state of the art method to face Recognition/verification 
 
 Rather than classifying images directly from a softmax classifier or with siamese network. FaceNet goes to a completely different route, A new loss called as triplet loss is introduced in this paper. This loss function is as follow 
 
-![triplet loss](https://miro.medium.com/max/3208/0*AX2TSZNk19_gDgTN.png)
+![triplet loss](https://miro.medium.com/max/1034/1*KoOPaO18mSAshqrjrBzttA.png)
 
 where, 
 * Fia is face embedding for a anchor image
 * Fip is face embedding for a positive image
 * Fin is face embedding for a negative image
-* alpha is margin (alpha is an hyper parameter)
+* N is margin (N is a hyper parameter)
 
 This loss work on euclidian distance between the three images, To train a network yourself you will need three images per example (i.e. one anchor image one positive and one negative) this loss function tries to reduce the euclidian distance between anchor and positive image and tries to increase the the euclidian distance between anchor image and negative image. 
 ![euclidian distance](https://miro.medium.com/max/3028/1*rDBbSTCvh0xnu2otaW9cyw.png)
