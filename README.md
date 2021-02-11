@@ -62,14 +62,14 @@ F.R.I.E.N.D.S is one of the best sitCom ever, So let's see out Recognizer can re
 
 Original image             |  Resulting image
 :-------------------------:|:-------------------------:
-![org1](images/friends_1.jpg)  |  ![infer1](infered_image/friends_1_infered.png)
-![org2](images/friends_2.jpg)  |  ![infer2](infered_image/friends_2_infered.png)
-![org3](images/friends_3.jpg)  |  ![infer3](infered_image/friends_3_infered.png)
-![org4](images/friends_4.jpg)  |  ![infer4](infered_image/friends_4_infered.png)
-![org5](images/friends_5.jpg)  |  ![infer5](infered_image/friends_5_infered.png)
-![org6](images/friends_6.jpg)  |  ![infer6](infered_image/friends_6_infered.png)
-![org7](images/friends_7.jpg)  |  ![infer7](infered_image/friends_7_infered.png)
-![org8](images/friends_8.jpg)  |  ![infer8](infered_image/friends_8_infered.png)
+![org1](images/friends_1.jpg)  |  ![infer1](Infered_image/friends_1_infered.png)
+![org2](images/friends_2.jpg)  |  ![infer2](Infered_image/friends_2_infered.png)
+![org3](images/friends_3.jpg)  |  ![infer3](Infered_image/friends_3_infered.png)
+![org4](images/friends_4.jpg)  |  ![infer4](Infered_image/friends_4_infered.png)
+![org5](images/friends_5.jpg)  |  ![infer5](Infered_image/friends_5_infered.png)
+![org6](images/friends_6.jpg)  |  ![infer6](Infered_image/friends_6_infered.png)
+![org7](images/friends_7.jpg)  |  ![infer7](Infered_image/friends_7_infered.png)
+![org8](images/friends_8.jpg)  |  ![infer8](Infered_image/friends_8_infered.png)
 
 **images are taken only for educational purpose**
 In some cases the model guessed Rachel wrong in image 5 and image 6
