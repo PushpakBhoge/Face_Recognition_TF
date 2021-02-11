@@ -8,6 +8,14 @@ import cv2
 
 class FaceRecognizer():
     def __init__(self, database_path=None):
+        """
+		Arguments:
+        database_path - path to json file holding embeddings of faces with name
+          format - {"Name1":[embedding1],
+                    "Name2":[embeddin2]}
+        Generating the json file using Load_people_into_DataBase is recommended
+
+		"""
         # get current directory
         self.cwdir = os.path.curdir
         # Set base directory for converted weights
@@ -26,8 +34,17 @@ class FaceRecognizer():
             self.database = json.load(file)
     
     def load_model(self):
+        """
+		Arguments:
+        None
+		Output:
+        a model instance
+        This method is not meant to be called outside class
+		"""
+        # load model from source
         model = InceptionResNetV1()
 
+        # Load weights layer by layer
         layer_files = os.listdir(self.WEIGHT_BASE)
         for i, layer in enumerate(model.layers):
             weight_files = [x for x in layer_files if x.split(".")[0]==layer.name]
@@ -43,12 +60,29 @@ class FaceRecognizer():
 
         return model
     
+    # method to export model
     def export_model(self, path=None):
+        """
+		Arguments:
+        path - output path of the model include .h5 at the end to save as keras
+                model else provide directory if want saved_model format
+		Output:
+
+		"""
         if path == None:
             path = os.path.join("Model", "FaceNet_Keras_converted.h5")
         self.model.save(path)
     
+    # method that preprocess iamges
     def preprocess_image(self, face_img):
+        """
+		Arguments:
+        face_img = Face crop of the image
+		Output:
+        return preprocessed(normalized) version of image
+
+		"""
+        # resize image and converty to recommended data type
         img = cv2.resize(face_img, (160,160))
         img = np.asarray(img, 'float32')
 
@@ -62,22 +96,64 @@ class FaceRecognizer():
 
         return processed_img
 
+    # l2 normalize embeddindgs
     def l2_normalize(self, embed, axis=-1, epsilon=1e-10):
+        """
+		Arguments:
+        embed - 128 number long embeddind 
+        axis - axis of the embedding default to -1
+        epsilon - a small number to avoid division by zero 
+		Output:
+        normalized version of embeddings
+
+		"""
         output = embed / np.sqrt(np.maximum(np.sum(np.square(embed), axis=axis, keepdims=True), epsilon))
         return output
-
+    
+    # method for getting face embeddings using model 
     def get_face_embedding(self, face):
+        """
+		Arguments:
+        face - face crop drom an image
+		Output:
+        face embedding with 128 parameters
+
+		"""
+        # preprocess iamge and expand the dimension 
         processed_face = self.preprocess_image(face)
         processed_face = np.expand_dims(processed_face, axis=0)
 
+        # predict using model and l2 normalize embedding
         model_pred = self.model.predict(processed_face)
         face_embedding = self.l2_normalize(model_pred)
         return face_embedding
     
+    # calculate euclidain distance between the true and predicted 
+    # face embeddings
     def calculate_distance(self, embd_real, embd_candidate):
+        """
+		Arguments:
+        embd_embd - embedding from database
+        embd_candidate - model predicted embedding
+		Output:
+        euclidian distance between the two embeddings
+
+		"""
         return distance.euclidean(embd_real, embd_candidate)
     
+    # Function whch compare predicted embedding face with embedding in database
+    # and return result with least distance as a person name
+    # if minimum distance is greater than 1 then person name is printed 
+    # as UNKNOWN person
     def Whoisit(self, face_embedding):
+        """
+		Arguments:
+        face_embeddings - face embedding vector of 128 dimension predicted 
+                            by model
+		Output: tuple
+        person_name - Name of the person from database where distance is minimum
+        minimum_distance - scaler of the distance from the detected person
+		"""
         distance = {}
         minimum_distance = None
         person_name = ""
