@@ -1,4 +1,5 @@
 from scipy.spatial import distance
+from Inference.inception_resnet_v1 import InceptionResNetV1
 import tensorflow as tf
 import numpy as np
 import json
@@ -6,23 +7,26 @@ import os
 import cv2 
 
 class FaceRecognizer():
-    def __init__(self):
+    def __init__(self, database_path=None):
+        # get current directory
         self.cwdir = os.path.curdir
-        self.MODEL_JSON = os.path.join(self.cwdir,'Model','FaceNet_Architecture.json')
+        # Set base directory for converted weights
         self.WEIGHT_BASE = os.path.join('Model','model_weights')
-        if "FaceNet_Keras_converted.h5" not in os.listdir(os.path.join(self.cwdir, 'Model')):
-            self.model = self.load_model()
-        else:
+        # Check if keras saved weights exists load from them if exists
+        # if any error then load from the extracted weights
+        try:
             model_path = os.path.join(self.cwdir, 'Model', 'FaceNet_Keras_converted.h5')
             self.model = tf.keras.models.load_model(model_path)
-        database_path = os.path.join(self.cwdir, 'DataBase', 'DataBase.json')
+        except:
+            self.model = self.load_model()
+        # Load DataBase
+        if database_path==None:
+            database_path = os.path.join(self.cwdir, 'DataBase', 'DataBase.json')
         with open(database_path, "r") as file:
             self.database = json.load(file)
     
     def load_model(self):
-        with open(self.MODEL_JSON, 'r') as file:
-            model_architecturect = json.load(file)
-            model = tf.keras.models.model_from_json(model_architecturect)
+        model = InceptionResNetV1()
 
         layer_files = os.listdir(self.WEIGHT_BASE)
         for i, layer in enumerate(model.layers):
@@ -84,5 +88,4 @@ class FaceRecognizer():
                 person_name = name
         if minimum_distance>1:
             person_name = "UNKNOWN"
-            minimum_distance = 2
         return person_name, minimum_distance
