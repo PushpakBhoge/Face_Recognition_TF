@@ -32,12 +32,13 @@ You can export the model in single keras .h5 format. I did excatly that to use t
 
 # Project directory structure
 folders discription
-* DataBase - here, Database is stored by default (currently project does not support multiple datbae but coming soon in flask app)
+* DataBase - here, Database is stored by default (currently project does not support multiple Databases but coming soon in flask app)
 * images - put your images here code will run face detection on images in this folder when app.py is run
 * Infered_image - Resulting images will be saved her by default when app.py is run
 * Model - model weights and other model related big files are stored here
 * People - contain images of faces of people you want to detect. Remember, faces need to be cropped over face see examples in the folder  (Add your face here! :smile: )
-rest folder i.e. Inference and Training contains code, ignore them
+
+rest folders i.e. Inference and Training contains code, ignore them
 
 # How to use this repository 
 Follow the steps as follow 
