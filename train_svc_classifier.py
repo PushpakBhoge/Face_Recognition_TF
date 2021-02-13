@@ -6,9 +6,9 @@ import os
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dir", type=str, required=True,
-	help="path to input video file")
+	help="path to the root of data")
 ap.add_argument("-o", "--outdir", type=str, required=False, default='Model',
-	help="OpenCV object tracker type")
+	help="path to where model and files to be saved")
 args = vars(ap.parse_args())
 
 print(f"Data directory - {args['dir']}")
